@@ -4,6 +4,14 @@ ctx = canvas.getContext("2d");
 canvas.width  = window.innerWidth - 20;
 canvas.height = window.innerHeight - 22;
 
+function windowResize() {
+    canvas.width  = window.innerWidth - 20;
+    canvas.height = window.innerHeight - 22;
+  };
+  
+window.addEventListener('resize', windowResize);
+
+
 var background = new Image();
 background.src = "https://img.freepik.com/free-photo/aerial-view-plains-fields_144627-46664.jpg";
 
@@ -22,17 +30,49 @@ function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawWorld({
-        from: {x:100, y:100},
-        to: {x:600, y:600},
-        control: {  x:500, y:100},
+        from: {x:canvas.width/10, y:window.innerHeight/5},
+        to: {x:0 , y:window.innerHeight/1.5},
+        control: {x:canvas.width/ 5, y:window.innerHeight/1.5},
         trackWidth: 50,
         carLength: 100,
         carCount: 5,
         carSpacing: 10,
     })  
     
+    drawWorld({
+        from: {x:0, y:window.innerHeight/2},
+        to: {x:canvas.width , y:window.innerHeight/1.5},
+        control: {x:canvas.width/20 , y:window.innerHeight/1.1},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+
+    drawWorld({
+        from: {x:canvas.width/6 , y:window.innerHeight/5},
+        to: {x:canvas.width/3 , y:window.innerHeight},
+        control: {x:canvas.width/2, y:window.innerHeight/3},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+
+    drawWorld({
+        from: {x:canvas.width/3 , y:window.innerHeight/5},
+        to: {x:canvas.width/4 , y:window.innerHeight},
+        control: {x:canvas.width/10, y:window.innerHeight/3},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+    
+    
+    
     frameCount++;
-    if (frameCount > 1000) {
+    if (frameCount > 1500) {
         frameCount = 0;
     }
 }
@@ -128,7 +168,7 @@ function drawWorld({
         carCount: 0,
         carSpacing,
         offset: offset + (carLength + carSpacing) * (carCount),
-        color: "lime"
+        color: getRandomColor()
     });
 
     drawTrain({ 
@@ -140,7 +180,7 @@ function drawWorld({
         carCount: 0,
         carSpacing,
         offset: offset + carLength * carCount + carSpacing + carLength * 1.4,
-        color: "lime",
+        color: getRandomColor(),
         roundCap: true,
     });
 
@@ -223,4 +263,13 @@ function drawTrack({from,to, control, width, color = "gray"}){
     ctx.setLineDash([width * 0.16, width * 0.4]);
     ctx.stroke();
     ctx.restore();
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
