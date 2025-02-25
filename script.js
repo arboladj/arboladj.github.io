@@ -1,34 +1,38 @@
 var canvas = document.getElementById("myCanvas"),
 ctx = canvas.getContext("2d");
+const rect1 = new Path2D();
+const rect2 = new Path2D();
+const rect3 = new Path2D();
 
-canvas.width  = window.innerWidth - 20;
-canvas.height = window.innerHeight - 22;
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
 
 function windowResize() {
-    canvas.width  = window.innerWidth - 20;
-    canvas.height = window.innerHeight - 22;
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
   };
   
 window.addEventListener('resize', windowResize);
 
-
-var background = new Image();
-background.src = "https://img.freepik.com/free-photo/aerial-view-plains-fields_144627-46664.jpg";
-
-background.onload = function(){
-    ctx.save();
-    ctx.drawImage(background,0,0);
-    ctx.restore(); 
-}
-
 let frameCount = 0;
 
+const scrollContainer = document.getElementById("main");
 
+scrollContainer.addEventListener("wheel", (evt) => {
+    evt.preventDefault();
+    scrollContainer.scrollLeft += evt.deltaY;
+});
+
+function scrollToAnchor() {
+    document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
+}
 
 animate();
 function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    //Creating J
     drawWorld({
         from: {x:canvas.width/10, y:window.innerHeight/5},
         to: {x:0 , y:window.innerHeight/1.5},
@@ -39,6 +43,7 @@ function animate(){
         carSpacing: 10,
     })  
     
+    //Creating J_underline
     drawWorld({
         from: {x:0, y:window.innerHeight/2},
         to: {x:canvas.width , y:window.innerHeight/1.5},
@@ -49,6 +54,7 @@ function animate(){
         carSpacing: 10,
     })  
 
+    //Creating right O
     drawWorld({
         from: {x:canvas.width/6 , y:window.innerHeight/5},
         to: {x:canvas.width/3 , y:window.innerHeight},
@@ -59,6 +65,7 @@ function animate(){
         carSpacing: 10,
     })  
 
+    //Creating left O
     drawWorld({
         from: {x:canvas.width/3 , y:window.innerHeight/5},
         to: {x:canvas.width/4 , y:window.innerHeight},
@@ -68,7 +75,51 @@ function animate(){
         carCount: 5,
         carSpacing: 10,
     })  
+
+     //Creating top of s
+     drawWorld({
+        from: {x:canvas.width/1.9 , y:window.innerHeight/5},
+        to: {x:canvas.width/1.35 , y:window.innerHeight/2},
+        control: {x:canvas.width/5, y:window.innerHeight/1.8},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+
+    //Creating bottom of s
+    drawWorld({
+        from: {x:canvas.width/2.1 , y:window.innerHeight/2},
+        to: {x:canvas.width/2.5 , y:window.innerHeight/1.4},
+        control: {x:canvas.width/1.5, y:window.innerHeight/1.8},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
     
+    //Creating left of h
+    drawWorld({
+        from: {x:canvas.width/1.7 , y:window.innerHeight/5},
+        to: {x:canvas.width/1.7 , y:window.innerHeight/1.4},
+        control: {x:canvas.width/1.6, y:window.innerHeight/3},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+
+    //Creating left of h
+    drawWorld({
+        from: {x:canvas.width/1.35 , y:window.innerHeight/5},
+        to: {x:canvas.width/1.35 , y:window.innerHeight/1.45},
+        control: {x:canvas.width/1.4, y:window.innerHeight/3},
+        trackWidth: 50,
+        carLength: 100,
+        carCount: 5,
+        carSpacing: 10,
+    })  
+
     
     
     frameCount++;
@@ -273,3 +324,16 @@ function getRandomColor() {
   }
   return color;
 }
+
+addEventListener('mousemove', function(event) {
+    event = event || window.event;
+    
+    if (ball && ctx.isPointInPath(ball, event.offsetX, event.offsetY)) {
+        canvas.style.cursor = 'pointer';
+
+    return
+    } else {
+        canvas.style.cursor = 'default';
+    }
+    
+    });
