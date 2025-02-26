@@ -1,11 +1,30 @@
 var canvas = document.getElementById("myCanvas"),
 ctx = canvas.getContext("2d");
-const rect1 = new Path2D();
-const rect2 = new Path2D();
-const rect3 = new Path2D();
+
 
 canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
+
+gsap.registerPlugin(ScrollTrigger);
+
+let sections = gsap.utils.toArray(".panel");
+
+gsap.to(sections, {
+  xPercent: -100 * (sections.length - 1),
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".container",
+    pin: true,
+    scrub: 1,
+    snap: {
+      snapTo: 1 / (sections.length - 1),
+      duration: 0.05
+    },
+    // base vertical scrolling on how wide the container is so it feels more natural.
+    end: "+=3500",
+  }
+});
+
 
 function windowResize() {
     canvas.width  = window.innerWidth;
@@ -15,17 +34,6 @@ function windowResize() {
 window.addEventListener('resize', windowResize);
 
 let frameCount = 0;
-
-const scrollContainer = document.getElementById("main");
-
-scrollContainer.addEventListener("wheel", (evt) => {
-    evt.preventDefault();
-    scrollContainer.scrollLeft += evt.deltaY;
-});
-
-function scrollToAnchor() {
-    document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
-}
 
 animate();
 function animate(){
@@ -37,10 +45,8 @@ function animate(){
         from: {x:canvas.width/10, y:window.innerHeight/5},
         to: {x:0 , y:window.innerHeight/1.5},
         control: {x:canvas.width/ 5, y:window.innerHeight/1.5},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
     
     //Creating J_underline
@@ -48,10 +54,8 @@ function animate(){
         from: {x:0, y:window.innerHeight/2},
         to: {x:canvas.width , y:window.innerHeight/1.5},
         control: {x:canvas.width/20 , y:window.innerHeight/1.1},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
     //Creating right O
@@ -59,10 +63,8 @@ function animate(){
         from: {x:canvas.width/6 , y:window.innerHeight/5},
         to: {x:canvas.width/3 , y:window.innerHeight},
         control: {x:canvas.width/2, y:window.innerHeight/3},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
     //Creating left O
@@ -70,10 +72,8 @@ function animate(){
         from: {x:canvas.width/3 , y:window.innerHeight/5},
         to: {x:canvas.width/4 , y:window.innerHeight},
         control: {x:canvas.width/10, y:window.innerHeight/3},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
      //Creating top of s
@@ -81,10 +81,8 @@ function animate(){
         from: {x:canvas.width/1.9 , y:window.innerHeight/5},
         to: {x:canvas.width/1.35 , y:window.innerHeight/2},
         control: {x:canvas.width/5, y:window.innerHeight/1.8},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
     //Creating bottom of s
@@ -92,10 +90,8 @@ function animate(){
         from: {x:canvas.width/2.1 , y:window.innerHeight/2},
         to: {x:canvas.width/2.5 , y:window.innerHeight/1.4},
         control: {x:canvas.width/1.5, y:window.innerHeight/1.8},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
     
     //Creating left of h
@@ -103,10 +99,8 @@ function animate(){
         from: {x:canvas.width/1.7 , y:window.innerHeight/5},
         to: {x:canvas.width/1.7 , y:window.innerHeight/1.4},
         control: {x:canvas.width/1.6, y:window.innerHeight/3},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
     //Creating left of h
@@ -114,10 +108,8 @@ function animate(){
         from: {x:canvas.width/1.35 , y:window.innerHeight/5},
         to: {x:canvas.width/1.35 , y:window.innerHeight/1.45},
         control: {x:canvas.width/1.4, y:window.innerHeight/3},
-        trackWidth: 50,
+        trackWidth: canvas.width/ 30,
         carLength: 100,
-        carCount: 5,
-        carSpacing: 10,
     })  
 
     
@@ -132,8 +124,8 @@ function drawWorld({
     from,
     to,
     control = to,
-    trackWidth = 40,
-    carLength = 100,
+    trackWidth,
+    carLength,
     carCount = 5,
     carSpacing = 10,
     trainSpeed = 2,
@@ -298,7 +290,7 @@ function drawTrain({
 }
 
 
-function drawTrack({from,to, control, width, color = "gray"}){
+function drawTrack({from,to, control, width, color = "#FDD6E6"}){
     ctx.save();
     ctx.beginPath();
     ctx.lineWidth = width * 0.8;
@@ -306,7 +298,7 @@ function drawTrack({from,to, control, width, color = "gray"}){
     ctx.quadraticCurveTo(control.x,control.y,to.x,to.y);
     ctx.strokeStyle = color;
     ctx.stroke();
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = '#1D1663';
     ctx.lineWidth = width * 0.6;
     ctx.stroke();
     ctx.strokeStyle = color;
@@ -324,16 +316,3 @@ function getRandomColor() {
   }
   return color;
 }
-
-addEventListener('mousemove', function(event) {
-    event = event || window.event;
-    
-    if (ball && ctx.isPointInPath(ball, event.offsetX, event.offsetY)) {
-        canvas.style.cursor = 'pointer';
-
-    return
-    } else {
-        canvas.style.cursor = 'default';
-    }
-    
-    });
