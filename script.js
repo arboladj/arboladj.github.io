@@ -1,8 +1,7 @@
 var canvas = document.getElementById("myCanvas"),
 ctx = canvas.getContext("2d");
 
-
-canvas.width  = window.innerWidth;
+canvas.width  = 4 * window.innerWidth;
 canvas.height = window.innerHeight;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,7 +26,7 @@ gsap.to(sections, {
 
 
 function windowResize() {
-    canvas.width  = window.innerWidth;
+    canvas.width  = 4 * window.innerWidth;
     canvas.height = window.innerHeight;
   };
   
@@ -42,11 +41,12 @@ function animate(){
 
     //Creating J
     drawWorld({
-        from: {x:canvas.width/10, y:window.innerHeight/5},
+        from: {x:canvas.width/19, y:window.innerHeight/5},
         to: {x:0 , y:window.innerHeight/1.5},
-        control: {x:canvas.width/ 5, y:window.innerHeight/1.5},
-        trackWidth: canvas.width/ 30,
+        control: {x:canvas.width/15, y:window.innerHeight/1.5},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
     
     //Creating J_underline
@@ -54,68 +54,95 @@ function animate(){
         from: {x:0, y:window.innerHeight/2},
         to: {x:canvas.width , y:window.innerHeight/1.5},
         control: {x:canvas.width/20 , y:window.innerHeight/1.1},
-        trackWidth: canvas.width/ 30,
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
 
     //Creating right O
     drawWorld({
-        from: {x:canvas.width/6 , y:window.innerHeight/5},
-        to: {x:canvas.width/3 , y:window.innerHeight},
-        control: {x:canvas.width/2, y:window.innerHeight/3},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/17 , y:window.innerHeight/5},
+        to: {x:canvas.width/900 , y:window.innerHeight},
+        control: {x:canvas.width/5, y:window.innerHeight/2},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
 
     //Creating left O
     drawWorld({
-        from: {x:canvas.width/3 , y:window.innerHeight/5},
-        to: {x:canvas.width/4 , y:window.innerHeight},
-        control: {x:canvas.width/10, y:window.innerHeight/3},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/11 , y:window.innerHeight/5},
+        to: {x:canvas.width/6 , y:window.innerHeight * 1.2},
+        control: {x:canvas.width/100, y:window.innerHeight/2},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
 
      //Creating top of s
      drawWorld({
-        from: {x:canvas.width/1.9 , y:window.innerHeight/5},
-        to: {x:canvas.width/1.35 , y:window.innerHeight/2},
-        control: {x:canvas.width/5, y:window.innerHeight/1.8},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/6 , y:window.innerHeight/5},
+        to: {x:canvas.width/4 , y:window.innerHeight/2},
+        control: {x:canvas.width/25, y:window.innerHeight/3},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
 
     //Creating bottom of s
     drawWorld({
-        from: {x:canvas.width/2.1 , y:window.innerHeight/2},
-        to: {x:canvas.width/2.5 , y:window.innerHeight/1.4},
-        control: {x:canvas.width/1.5, y:window.innerHeight/1.8},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/7 , y:window.innerHeight/2.6},
+        to: {x:canvas.width/8 , y:window.innerHeight/1.6},
+        control: {x:canvas.width/5, y:window.innerHeight/2},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
     
     //Creating left of h
     drawWorld({
-        from: {x:canvas.width/1.7 , y:window.innerHeight/5},
-        to: {x:canvas.width/1.7 , y:window.innerHeight/1.4},
-        control: {x:canvas.width/1.6, y:window.innerHeight/3},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/5.8 , y:window.innerHeight/5},
+        to: {x:canvas.width/5.8 , y:window.innerHeight/1.5},
+        control: {x:canvas.width/5.5, y:window.innerHeight/3},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
 
     //Creating left of h
     drawWorld({
-        from: {x:canvas.width/1.35 , y:window.innerHeight/5},
-        to: {x:canvas.width/1.35 , y:window.innerHeight/1.45},
-        control: {x:canvas.width/1.4, y:window.innerHeight/3},
-        trackWidth: canvas.width/ 30,
+        from: {x:canvas.width/4.3 , y:window.innerHeight/5},
+        to: {x:canvas.width/4.3 , y:window.innerHeight/1.45},
+        control: {x:canvas.width/4.5, y:window.innerHeight/2},
+        trackWidth: canvas.width/ 100,
         carLength: 100,
+        direction:1,
     })  
+
+    //Creating parallel track
+    drawWorld({
+        from: {x:0 , y:window.innerHeight/1.2},
+        to: {x:canvas.width * 4 , y:window.innerHeight/1.2},
+        control: {x:canvas.width, y:window.innerHeight/1.2},
+        trackWidth: canvas.width/ 100,
+        carLength: 100,
+        direction:1,
+    }) 
+
+    //Creating parallel track
+    drawWorld({
+        from: {x:0 , y:window.innerHeight/1.1},
+        to: {x:canvas.width * 4 , y:window.innerHeight/1.1},
+        control: {x:canvas.width, y:window.innerHeight/1.1},
+        trackWidth: canvas.width/ 100,
+        carLength: 100,
+        direction:-1,
+    })
 
     
     
     frameCount++;
-    if (frameCount > 1500) {
+    if (frameCount > 4100) {
         frameCount = 0;
     }
 }
@@ -129,9 +156,10 @@ function drawWorld({
     carCount = 5,
     carSpacing = 10,
     trainSpeed = 2,
+    direction,
 }) {
 
-    const offset = frameCount * trainSpeed - carSpacing * carCount - carLength * (carCount + 1);
+    const offset = (frameCount * trainSpeed - carSpacing * carCount - carLength * (carCount + 1));
     drawTrack({from,to,control,width: trackWidth});
 
     //Carts
@@ -143,11 +171,11 @@ function drawWorld({
         carLength,
         carCount,
         carSpacing,
-        offset,
+        offset: offset,
         color: "lime",
     });
     const carThicknessFactor = 0.15;
-    const inverseCarThicknessFactor = 1-carThicknessFactor;
+    const inverseCarThicknessFactor = (1-carThicknessFactor);
 
     //Carts Design
     drawTrain({
