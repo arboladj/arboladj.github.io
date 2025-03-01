@@ -87,17 +87,15 @@ h1{
 
 @media (max-width: 768px) { 
 
-  /* Styles to apply when screen width is 768px or smaller (typical phone size) */ 
-
   body { 
 
-      font-size: 16px; 
+      font-size: 14px; 
 
   } 
 
   nav ul { 
 
-      display: block; /* Stack navigation menu vertically */ 
+      display: flex; 
 
   } 
 
