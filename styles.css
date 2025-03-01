@@ -32,7 +32,7 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   margin: 4vw 4vw 4vw 4vw;
   padding: 1vw 1vw 1vw 1vw;
-  font-size: max(20px, 1.5vw);
+  font-size: max(15px, 1.5vw);
   position: fixed;
 }
 
@@ -50,14 +50,14 @@ h1{
   background-color: rgba(0, 0, 0, 0.5);
   margin: 4vw 4vw 4vw 4vw;
   padding: 1vw 1vw 1vw 1vw;
-  font-size: max(20px, 1.5vw);
+  font-size: max(15px, 1.5vw);
   position: fixed;
 }
 #projects{
   background-color: rgba(0, 0, 0, 0.5);
   margin: 4vw 4vw 4vw 4vw;
   padding: 1vw 1vw 1vw 1vw;
-  font-size: max(20px, 1.5vw);
+  font-size: max(15px, 1.5vw);
   position: fixed;
 }
 
@@ -67,13 +67,14 @@ h1{
   margin: 0vw 4vw 0vw 0vw;
 
 }#imgGo{
-  width: 40vw;
+  width: 18vw;
   max-width: 200px;
   margin: 0vw 4vw 0vw 0vw;
 }
 .imgProject{
   height: 40vw;
   max-height: 200px;
+  max-width: 200px;
   margin: 0vw 4vw 0vw 0vw;
 }
 #contact{
@@ -81,5 +82,23 @@ h1{
   bottom: 0vh;
   left:0vw;
   background-color: rgb(0, 0, 0);
-  font-size: max(20px, 1.5vw);
+  font-size: max(15px, 1.5vw);
 }
+
+@media (max-width: 768px) { 
+
+  /* Styles to apply when screen width is 768px or smaller (typical phone size) */ 
+
+  body { 
+
+      font-size: 16px; 
+
+  } 
+
+  nav ul { 
+
+      display: block; /* Stack navigation menu vertically */ 
+
+  } 
+
+} 
